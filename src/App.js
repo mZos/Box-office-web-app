@@ -4,22 +4,19 @@ import Home from './pages/Home';
 import Starred from './pages/Starred';
 function App() {
   return (
-    <div>
-      <Nav />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
+    <Switch>
+      <Route exact path="/">
+        <Home />
+      </Route>
 
-        <Route exact path="/starred">
-          <Starred />
-        </Route>
+      <Route exact path="/starred">
+        <Starred />
+      </Route>
 
-        <Route>
-          <div>Error! 404 This page not found</div>
-        </Route>
-      </Switch>
-    </div>
+      <Route>
+        <div>Error! 404 This page not found</div>
+      </Route>
+    </Switch>
   );
 }
 
