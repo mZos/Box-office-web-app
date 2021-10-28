@@ -1,6 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Starred from './pages/Starred';
+
 function App() {
   return (
     <Switch>

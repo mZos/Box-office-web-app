@@ -10,16 +10,34 @@ const Home = () => {
     setinput(event.target.value);
   };
 
+  const onSearch = () => {
+    apiGetResults(`/search/shows?q=${input}`).then(result => {
+      setResults(result);
+    });
+  };
+
   const onKeyDown = event => {
     if (event.keyCode === 13) {
       onSearch();
     }
   };
 
-  const onSearch = () => {
-    apiGetResults(`/search/shows?q=${input}`).then(result => {
-      setResults(result);
-    });
+  const renderResults = () => {
+    if (results && results.length === 0) {
+      return <div>No results found</div>;
+    }
+
+    if (results && results.length > 0) {
+      return (
+        <div>
+          {results.map(item => (
+            <div key={item.show.id}>{item.show.name}</div>
+          ))}
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -33,6 +51,7 @@ const Home = () => {
       <button type="button" onClick={onSearch}>
         Search
       </button>
+      {renderResults()}
     </MainPageLayout>
   );
 };
