@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import MainPageLayout from '../component/MainPageLayout';
+import { apiGetResults } from '../misc/config';
 
 const Home = () => {
   const [input, setinput] = useState('');
+  const [results, setResults] = useState(null);
 
   const onInputChange = event => {
     setinput(event.target.value);
@@ -15,11 +17,9 @@ const Home = () => {
   };
 
   const onSearch = () => {
-    fetch(`https://api.tvmaze.com/search/shows?q=${input}`)
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-      });
+    apiGetResults(`/search/shows?q=${input}`).then(result => {
+      setResults(result);
+    });
   };
 
   return (
