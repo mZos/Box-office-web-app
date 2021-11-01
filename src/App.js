@@ -1,28 +1,39 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import Show from './pages/Show';
 import Home from './pages/Home';
 import Starred from './pages/Starred';
 
+const theme = {
+  mainColors: {
+    blue: '#2400ff',
+    gray: '#c6c6c6',
+    dark: '#353535',
+  },
+};
+
 function App() {
   return (
-    <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
+    <ThemeProvider theme={theme}>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
 
-      <Route exact path="/starred">
-        <Starred />
-      </Route>
+        <Route exact path="/starred">
+          <Starred />
+        </Route>
 
-      <Route exact path="/show/:id">
-        <Show />
-      </Route>
+        <Route exact path="/show/:id">
+          <Show />
+        </Route>
 
-      <Route>
-        <div>Error! 404 This page not found</div>
-      </Route>
-    </Switch>
+        <Route>
+          <div>Error! 404 This page not found</div>
+        </Route>
+      </Switch>
+    </ThemeProvider>
   );
 }
 
