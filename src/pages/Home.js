@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ActorGrid from '../component/actor/ActorGrid';
 import CustomRadio from '../component/CustomRadio';
 import MainPageLayout from '../component/MainPageLayout';
@@ -11,6 +11,21 @@ import {
   SearchInput,
 } from './Home.styled';
 
+const renderResults = results => {
+  if (results && results.length === 0) {
+    return <div>No results found</div>;
+  }
+
+  if (results && results.length > 0) {
+    return results[0].show ? (
+      <ShowGrid data={results} />
+    ) : (
+      <ActorGrid data={results} />
+    );
+  }
+  return null;
+};
+
 const Home = () => {
   const [input, setinput] = useLastQuery();
   const [results, setResults] = useState(null);
@@ -18,9 +33,12 @@ const Home = () => {
 
   const isShowsSearch = searchOption === 'shows';
 
-  const onInputChange = event => {
-    setinput(event.target.value);
-  };
+  const onInputChange = useCallback(
+    event => {
+      setinput(event.target.value);
+    },
+    [setinput]
+  );
 
   const onSearch = () => {
     apiGetResults(`/search/${searchOption}?q=${input}`).then(result => {
@@ -35,24 +53,9 @@ const Home = () => {
     }
   };
 
-  const renderResults = () => {
-    if (results && results.length === 0) {
-      return <div>No results found</div>;
-    }
-
-    if (results && results.length > 0) {
-      return results[0].show ? (
-        <ShowGrid data={results} />
-      ) : (
-        <ActorGrid data={results} />
-      );
-    }
-    return null;
-  };
-
-  const onRadioBtnChange = event => {
+  const onRadioBtnChange = useCallback(event => {
     setSearchOption(event.target.value);
-  };
+  }, []);
 
   return (
     <MainPageLayout>
@@ -90,7 +93,7 @@ const Home = () => {
           Search
         </button>
       </SearchButtonWrapper>
-      {renderResults()}
+      {renderResults(results)}
     </MainPageLayout>
   );
 };
